@@ -1,0 +1,5 @@
+# Ignoring sublime project settings
+*.sublime-project
+*.sublime-workspace
+# Ignoring Glue Terminal Logs
+*.glue
