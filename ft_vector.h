@@ -29,11 +29,15 @@ typedef	struct s_vector	t_vector;
 
 t_vector	*ft_vec_new(size_t step);
 
+t_vector	*ft_vec_newn(size_t step, size_t init_size);
+
 t_vector	*ft_vec_copy(t_vector *v);
 
 t_vector	*ft_vec_move(t_vector *v);
 
 void		*ft_vec_at(t_vector *v, size_t index);
+
+void		ft_vec_append(t_vector *v, void *data);
 
 void		ft_vec_resize(t_vector *v, size_t new_size);
 
