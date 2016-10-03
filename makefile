@@ -97,6 +97,18 @@ C_FILES +=	ft_lstnew.c \
 			ft_lstdel.c \
 			ft_lstdelone.c
 
+# Vector (aka: Resizable Array) section.
+C_FILES +=	ft_vec_append.c \
+			ft_vec_at.c \
+			ft_vec_copy.c \
+			ft_vec_del.c \
+			ft_vec_move.c \
+			ft_vec_new.c \
+			ft_vec_newn.c \
+			ft_vec_pop.c \
+			ft_vec_pop_s.c \
+			ft_vec_resize.c
+
 SOURCES=$(patsubst %, $(SRC_DIR)%, $(C_FILES))
 
 OBJECTS=$(patsubst %.c, %.o, $(C_FILES))
