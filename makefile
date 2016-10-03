@@ -14,7 +14,9 @@ NAME=libft.a
 
 CC=gcc
 
-C_FLAGS=-Wall -Wextra -Werror -O3
+# WARNING: Do not submit with -O flags to moulinette.
+
+C_FLAGS=-Wall -Wextra -Werror
 
 SRC_DIR=./
 
