@@ -19,5 +19,6 @@
 # include "ft_output.h"
 # include "ft_math.h"
 # include "ft_list.h"
+# include "ft_vector.h"
 
 #endif
