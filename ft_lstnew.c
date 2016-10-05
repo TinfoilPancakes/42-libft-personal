@@ -32,6 +32,7 @@ t_list	*ft_lstnew(const void *content, size_t content_size)
 			new_node->content_size = 0;
 			new_node->content = NULL;
 		}
+		new_node->next = NULL;
 	}
 	return (new_node);
 }
