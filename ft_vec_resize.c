@@ -20,9 +20,10 @@ void	ft_vec_resize(t_vector *v, size_t new_size)
 	if (new_size > v->size)
 		ft_memcpy(new_data, v->data, v->size * v->step);
 	else
+	{
 		ft_memcpy(new_data, v->data, new_size * v->step);
-	if (v->count < new_size)
 		v->count = new_size;
+	}
 	ft_memdel(&v->data);
 	v->size = new_size;
 	v->data = new_data;
