@@ -12,7 +12,7 @@
 
 NAME=libft.a
 
-CC=gcc
+CC=clang
 
 # WARNING: Do not submit with -O flags to moulinette.
 
@@ -87,7 +87,9 @@ C_FILES +=	ft_strlen.c \
 			ft_itoa.c \
 			ft_itoa_generic.c \
 			ft_atoi.c \
-			ft_atoi_generic.c
+			ft_atoi_generic.c \
+			kmp_strstr.c \
+			kmp_generate_table.c
 
 # Single Link List section.
 C_FILES +=	ft_lstnew.c \

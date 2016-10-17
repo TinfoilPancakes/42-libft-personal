@@ -92,4 +92,10 @@ int		ft_strequ(const char *s1, const char *s2);
 
 int		ft_strnequ(const char *s1, const char *s2, size_t n);
 
+int		*kmp_generate_table(const char *pattern);
+
+char	*kmp_strstr(const char *string, const char *pattern);
+
+char	*kmp_strnstr(const char *string, const char *pattern, size_t n);
+
 #endif
