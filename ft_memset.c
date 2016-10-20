@@ -12,17 +12,55 @@
 
 #include "ft_memory.h"
 
+/*
+** This is the hacky slashy way of setting memory.
+** Pretty much what they use in the gnu libc implementation.
+*/
+
 void	*ft_memset(void *b, int c, size_t len)
 {
-	t_byte	*ptr;
+	t_byte	*s_ptr;
+	size_t	*b_ptr;
+	size_t	cb;
+	t_byte	cc;
 
-	c = (t_byte)c;
-	ptr = (t_byte *)b;
+	cc = (t_byte)c;
+	cb = cc;
+	cb |= cb << 8;
+	cb |= cb << 16;
+	cb |= cb << 32;
+	s_ptr = b;
+	while (len % 8)
+	{
+		*s_ptr = cc;
+		++s_ptr;
+		--len;
+	}
+	b_ptr = (size_t *)s_ptr;
 	while (len)
 	{
-		*ptr = c;
-		++ptr;
-		--len;
+		*b_ptr = cb;
+		++b_ptr;
+		len -= 8;
 	}
 	return (b);
 }
+
+/*
+**	Old version, simpler and faster if compiled with -O flags.
+**
+**	void	*ft_memset(void *b, int c, size_t len)
+**	{
+**		t_byte	*ptr;
+**
+**		c = (t_byte)c;
+**		ptr = (t_byte *)b;
+**		while (len)
+**		{
+**			*ptr = c;
+**			++ptr;
+**			--len;
+**		}
+**		return (b);
+**	}
+*/

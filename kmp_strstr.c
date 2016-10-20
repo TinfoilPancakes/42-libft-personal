@@ -13,8 +13,6 @@
 #include "ft_string.h"
 #include "ft_memory.h"
 
-#include <stdio.h>
-
 char	*kmp_strstr(const char *string, const char *pattern)
 {
 	int		*search_table;
