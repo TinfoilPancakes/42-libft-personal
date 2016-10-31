@@ -1,0 +1,184 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_vector_T.htf                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ppatil <ppatil@student.42.us.org>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/10/28 23:04:51 by ppatil            #+#    #+#             */
+/*   Updated: 2016/10/28 23:04:51 by ppatil           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifdef T
+# ifdef TNM
+
+#  include "ft_memory.h"
+
+#  define T_VEC_BUFF_SIZE 16
+
+typedef	struct
+{
+	T		*data;
+	T		*end;
+	size_t	count;
+	size_t	size;
+} TNM(t_vec);
+
+/*
+**	Creates new vector in heap with default buffer size.
+*/
+
+TNM(t_vec)	*TNM(vec_new)(void)
+{
+	TNM(t_vec)	*new_vec;
+
+	new_vec = (TNM(t_vec) *)ft_memalloc(sizeof(TNM(t_vec)));
+	if (!new_vec)
+		return (NULL);
+	new_vec->data = (T *)ft_memalloc(sizeof(T) * T_VEC_BUFF_SIZE);
+	if (!(new_vec->data))
+	{
+		ft_memdel(&new_vec);
+		return (NULL);
+	}
+	new_vec->end = new_vec->data;
+	new_vec->size = T_VEC_BUFF_SIZE;
+	new_vec->count = 0;
+	return (new_vec);
+}
+
+/*
+**	Creates new vector in heap with user defined buffer size.
+*/
+
+TNM(t_vec)	*TNM(vec_new_n)(size_t initial_size)
+{
+	TNM(t_vec)	*new_vec;
+
+	new_vec = (TNM(t_vec) *)ft_memalloc(sizeof(TNM(t_vec)));
+	if (!new_vec)
+		return (NULL);
+	new_vec->data = (T *)ft_memalloc(sizeof(T) * initial_size);
+	if (!(new_vec->data))
+	{
+		ft_memdel(&new_vec);
+		return (NULL);
+	}
+	new_vec->end = new_vec->data;
+	new_vec->size = initial_size;
+	new_vec->count = 0;
+	return (new_vec);
+}
+
+/*
+**	Creates a copy of another vector.
+*/
+
+TNM(t_vec)	*TNM(vec_cpy)(TNM(t_vec) *old_vec)
+{
+	TNM(t_vec)	*new_vec;
+
+	new_vec = (TNM(t_vec) *)ft_memalloc(sizeof(TNM(t_vec)));
+	if (!new_vec)
+		return (NULL);
+	new_vec->data = (T *)ft_memalloc(sizeof(T) * old_vec->size);
+	if (!(new_vec->data))
+	{
+		ft_memdel(&new_vec);
+		return (NULL);
+	}
+	ft_memcpy(new_vec->data, old_vec->data, old_vec->size * sizeof(T));
+	new_vec->end = new_vec->data + sizeof(T) * old_vec->count;
+	new_vec->size = old_vec->size;
+	new_vec->count = old_vec->count;
+	return (new_vec);
+}
+
+void		TNM(vec_resize)(TNM(t_vec) *v, size_t new_size)
+{
+	T	*new_buff;
+
+	new_buff = ft_memalloc(sizeof(T) * new_size);
+	if (new_size > v->size)
+		ft_memcpy(new_buff, v->data, v->size);
+	else
+	{
+		ft_memcpy(new_buff, v->data, new_size);
+		v->count = new_size;
+	}
+	ft_memdel(&(v->data));
+	v->data = new_buff;
+	v->size = new_size;
+	v->end = v->data + sizeof(T) * v->count;
+}
+
+void		TNM(vec_push)(TNM(t_vec) *v, T elem)
+{
+	if (v->count == v->size)
+		TNM(vec_resize)(v, v->size * 2);
+	*(v->end) = elem;
+	v->end++;
+	v->count++;
+}
+
+int			TNM(vec_peek)(TNM(t_vec) *v, T *res)
+{
+	if (v->end == v->data)
+		return (0);
+	*res = *(v->end - sizeof(T));
+	return (1);
+}
+
+T			*TNM(vec_pop)(TNM(t_vec) *v)
+{
+	if (v->end == v->data)
+		return (NULL);
+	v->end--;
+	v->count--;
+	return (v->end);
+}
+
+void		TNM(vec_append)(TNM(t_vec) *v, T *str, size_t n)
+{
+	if (vec->count + n >= vec->size)
+		vec_resize(v, vec->count + n + 1);
+	vec->count += n;
+	while (n)
+	{
+		*(vec->end) = *str;
+		vec->end++;
+		str++;
+		n--;
+	}
+}
+
+T			*TNM(vec_at)(TNM(t_vec) *v, size_t index)
+{
+	return (v->data + index * sizeof(T));
+}
+
+TNM(t_vec)	TNM(vec_join)(TNM(t_vec) *v1, TNM(t_vec) *v2)
+{
+	TNM(t_vec)	new_vec;
+
+	new_vec = TNM(vec_new_n)(v1->count + v2->count);
+	new_vec->count = v1->count + v2->count;
+	ft_memcpy(new_vec->end, v1->data, v1->count);
+	new_vec->end = new_vec->end + sizeof(T) * v2->count;
+	ft_memcpy(new_vec->end, v2->data, v2->count);
+	new_vec->end = new_vec->end + sizeof(T) * v2->count;
+	return (new_vec);
+}
+
+void		TNM(vec_del)(TNM(t_vec) **v)
+{
+	ft_memdel(&((*v)->data));
+	ft_memdel(v);
+}
+
+#  undef T_VEC_BUFF_SIZE
+#  undef TNM
+# endif
+# undef T
+#endif

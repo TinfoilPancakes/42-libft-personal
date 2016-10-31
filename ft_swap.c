@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_swap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppatil <ppatil@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/09/28 18:32:47 by ppatil            #+#    #+#             */
-/*   Updated: 2016/09/28 18:32:47 by ppatil           ###   ########.fr       */
+/*   Created: 2016/10/29 17:08:46 by ppatil            #+#    #+#             */
+/*   Updated: 2016/10/29 17:08:46 by ppatil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#include "ft_algorithms.h"
 
-# include "ft_typedefs.h"
-# include "ft_memory.h"
-# include "ft_string.h"
-# include "ft_output.h"
-# include "ft_math.h"
-# include "ft_list.h"
-# include "ft_vector.h"
-# include "ft_algorithms.h"
+/*
+**	Ah the ol' 42 switch-a-roo...
+*/
 
-#endif
+void	ft_swap(void *l, void *r, size_t step)
+{
+	register t_byte	tmp;
+	register t_byte	*lptr;
+	register t_byte	*rptr;
+
+	lptr = (t_byte *)l;
+	rptr = (t_byte *)r;
+	while (step)
+	{
+		tmp = *lptr;
+		*lptr = *rptr;
+		*rptr = tmp;
+		lptr++;
+		rptr++;
+		step--;
+	}
+}

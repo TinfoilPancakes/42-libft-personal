@@ -6,7 +6,7 @@
 #    By: ppatil <ppatil@student.42.us.org>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/23 12:56:18 by ppatil            #+#    #+#              #
-#    Updated: 2016/09/28 21:54:10 by ppatil           ###   ########.fr        #
+#    Updated: 2016/10/28 22:37:36 by ppatil           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,8 @@ CC=cc
 C_FLAGS=-Wall -Wextra -Werror
 
 SRC_DIR=./
+
+OBJ_DIR=./build/
 
 INC_DIR=./
 
@@ -89,7 +91,7 @@ C_FILES +=	ft_strlen.c \
 			ft_atoi.c \
 			ft_atoi_generic.c
 
-#
+# Knuth Morris Pratt String searching section.
 C_FILES +=	kmp_strstr.c \
 			kmp_strnstr.c \
 			kmp_generate_table.c
@@ -114,27 +116,53 @@ C_FILES +=	ft_vec_append.c \
 			ft_vec_pop_s.c \
 			ft_vec_resize.c
 
-SOURCES=$(patsubst %, $(SRC_DIR)%, $(C_FILES))
+# Algorithms (heapsort, swap etc...) section.
+C_FILES +=	ft_swap.c \
+			ft_heapsort.c \
+			reheap_up.c \
+			reheap_down.c
 
-OBJECTS=$(patsubst %.c, %.o, $(C_FILES))
+SOURCES=$(addprefix $(SRC_DIR), $(C_FILES))
+
+INCLUDES=$(addprefix -I, $(INC_DIR))
+
+OBJECTS=$(addprefix $(OBJ_DIR), $(patsubst %.c, %.o, $(C_FILES)))
 
 default : all
 
+test : $(NAME)
+	$(MAKE) -C ./test/ re
+	./test/test.out
+
 all : $(NAME)
 
-$(NAME) : $(OBJECTS)
-	ar rc $(NAME) $(OBJECTS)
-	ranlib $(NAME)
+$(NAME) : $(OBJ_DIR) $(OBJECTS)
+	@echo "Archiving object files..."
+	@ar rc $(NAME) $(OBJECTS)
+	@echo "Done."
+	@echo "Indexing..."
+	@ranlib $(NAME)
+	@echo "Done."
 
-$(OBJECTS) : $(SOURCES)
-	$(CC) $(C_FLAGS) -c $(SOURCES) -I$(INC_DIR)
+$(OBJ_DIR) :
+	@echo "Creating build directory..."
+	@mkdir -p $(OBJ_DIR)
+	@echo "Done."
+
+$(OBJ_DIR)%.o : $(SRC_DIR)%.c
+	$(CC) $(C_FLAGS) -c $< -o $@ $(INCLUDES)
 
 fclean : clean
-	rm -f $(NAME)
+	@echo "Removing $(NAME)..."
+	@rm -rf $(NAME)
+	@echo "Done."
 
 clean :
-	rm -f $(OBJECTS)
+	@echo "Cleaning last build..."
+	@rm -rf $(OBJ_DIR)
+	@echo "Done."
 
 re : fclean all
 
-.PHONY : clean fclean re
+
+.PHONY : clean fclean re test
