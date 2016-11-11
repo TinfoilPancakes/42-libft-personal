@@ -99,7 +99,9 @@ C_FILES +=	ft_vec_append.c \
 			ft_vec_new.c \
 			ft_vec_newn.c \
 			ft_vec_pop.c \
-			ft_vec_pop_s.c \
+			ft_vec_push.c \
+			ft_vec_peek.c \
+			ft_vec_join.c \
 			ft_vec_resize.c
 
 # Algorithms (heapsort, swap etc...)

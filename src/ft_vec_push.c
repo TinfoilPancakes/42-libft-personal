@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_vec_copy.c                                      :+:      :+:    :+:   */
+/*   ft_vec_push.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppatil <ppatil@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/02 09:23:07 by ppatil            #+#    #+#             */
-/*   Updated: 2016/10/02 09:23:07 by ppatil           ###   ########.fr       */
+/*   Created: 2016/11/11 11:32:02 by ppatil            #+#    #+#             */
+/*   Updated: 2016/11/11 11:32:02 by ppatil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_vector.h"
 
-t_vector	ft_vec_copy(t_vector *v)
+void	ft_vec_push(t_vector *v, void *elem)
 {
-	t_vector	new_vec;
-
-	new_vec.step = v->step;
-	new_vec.size = v->size;
-	new_vec.count = v->count;
-	new_vec.data = ft_memalloc(new_vec.size * new_vec.step);
-	ft_memcpy(new_vec.data, v->data, new_vec.step * new_vec.count);
-	new_vec.end = new_vec.data + new_vec.count * new_vec.step;
-	return (new_vec);
+	if (v->count >= v->size)
+		ft_vec_resize(v, v->size * 2);
+	ft_memmove(v->end, elem, v->step);
+	v->end++;
+	v->count++;
 }

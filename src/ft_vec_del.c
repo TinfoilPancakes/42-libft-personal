@@ -12,8 +12,10 @@
 
 #include "ft_vector.h"
 
-void	ft_vec_del(t_vector **v)
+void	ft_vec_del(t_vector *v)
 {
-	ft_memdel(&(*v)->data);
-	ft_memdel((void **)v);
+	ft_memdel(&v->data);
+	v->count = 0;
+	v->size = 0;
+	v->end = NULL;
 }

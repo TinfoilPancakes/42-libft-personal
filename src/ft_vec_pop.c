@@ -16,8 +16,11 @@
 ** This function should fail if the vector is empty.
 */
 
-void	ft_vec_pop(t_vector *v, void *store)
+void	*ft_vec_pop(t_vector *v)
 {
-	ft_memmove(store, v->data + (v->count - 1) * v->step, v->step);
-	(v->count)--;
+	if (v->end == v->data)
+		return (NULL);
+	v->count--;
+	v->end--;
+	return (v->end);
 }

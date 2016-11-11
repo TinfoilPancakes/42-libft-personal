@@ -27,4 +27,5 @@ void	ft_vec_resize(t_vector *v, size_t new_size)
 	ft_memdel(&v->data);
 	v->size = new_size;
 	v->data = new_data;
+	v->end = new_data + v->count * v->step;
 }
