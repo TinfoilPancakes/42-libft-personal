@@ -21,6 +21,6 @@ void	*ft_vec_pop(t_vector *v)
 	if (v->end == v->data)
 		return (NULL);
 	v->count--;
-	v->end--;
+	v->end -= v->step;
 	return (v->end);
 }

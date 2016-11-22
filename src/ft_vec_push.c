@@ -17,6 +17,6 @@ void	ft_vec_push(t_vector *v, void *elem)
 	if (v->count >= v->size)
 		ft_vec_resize(v, v->size * 2);
 	ft_memmove(v->end, elem, v->step);
-	v->end++;
+	v->end += v->step;
 	v->count++;
 }
